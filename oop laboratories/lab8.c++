@@ -48,7 +48,7 @@ private:
 public:
     // Байгуулагч: төвийн координат, радиус, нэр
     Circle(double cx, double cy, double r, string n) : Shape2D(n, cx, cy) {
-        radius = r;
+        this->radius = r;
     }
     // Талбай = PI * r * r
     double talbaiFlaah() {
