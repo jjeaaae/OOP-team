@@ -166,5 +166,48 @@ int main() {
     myTriangle.haruulah();
 
     cout << "Uussen object-iin too:" << Shape :: getCount() << endl;
+    // ======= 5-р даалгавар: Талбай болон периметрээр эрэмбэлэх naomi
+
+    // Shape заагчдын массив үүсгэж, 3 объектыг хадгална
+    Shape* dursууd[3];
+    dursууd[0] = &myCircle;
+    dursууd[1] = &mySquare;
+    dursууd[2] = &myTriangle;
+
+    int n = 3;
+
+    // --- Талбайгаар эрэмбэлэх (bubble sort) ---
+    // talbaiFlaah() жинхэнэ хийсвэр функцийг ашигласан
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (dursууd[j]->talbaiFlaah() > dursууd[j+1]->talbaiFlaah()) {
+                Shape* temp = dursууd[j];
+                dursууd[j] = dursууd[j+1];
+                dursууd[j+1] = temp;
+            }
+        }
+    }
+    cout << "\n=== Talbaigar erembelesen (bagaas ih ruu) ===" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << dursууd[i]->getName()
+             << " | talbai: " << dursууd[i]->talbaiFlaah() << endl;
+    }
+
+    // --- Периметрээр эрэмбэлэх (bubble sort) ---
+    // perimetrFlaah() жинхэнэ хийсвэр функцийг ашигласан
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (dursууd[j]->perimetrFlaah() > dursууd[j+1]->perimetrFlaah()) {
+                Shape* temp = dursууd[j];
+                dursууd[j] = dursууd[j+1];
+                dursууd[j+1] = temp;
+            }
+        }
+    }
+    cout << "\n=== Perimetreер erembelesen (bagaas ih ruu) ===" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << dursууd[i]->getName()
+             << " | perimetr: " << dursууd[i]->perimetrFlaah() << endl;
+    }
     return 0;
 }
