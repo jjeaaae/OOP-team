@@ -2,212 +2,194 @@
 #include <cmath>
 #include <string>
 using namespace std;
-// 1-р класс: Shape (эх класс)
+
+// ===================== SHAPE =====================
 class Shape {
 protected:
-    string name;  // Дүрсийн нэр
+    string name;
+
 public:
-//утга оноох (count static хувьсагчид утга оноох)
-    static void setCount(int c){
-        count = c;
-    }
-//утга авах (count static хувьсагчийг авах)
-    static int getCount(){
-        return count;
-    }
     static int count;
-    // Байгуулагч - нэр оноох
+
     Shape(string n) {
-        name = n;
+        this->name = n;
         count++;
     }
+
     string getName() {
-        return name;
+        return this->name;
     }
-   
+
+    static void setCount(int c) {
+        count = c;
+    }
+
+    static int getCount() {
+        return count;
+    }
+
     virtual double talbaiFlaah() = 0;
     virtual double perimetrFlaah() = 0;
 };
-int Shape :: count = 0;
-// 2-р класс: Shape2D (Shape-аас удамшина)
+
+int Shape::count = 0;
+
+
+//SHAPE2D (PURE VIRTUAL )
 class Shape2D : public Shape {
 protected:
-    double x;  // Байрлалын x координат
-    double y;  // Байрлалын y координат
+    double x, y;
+
 public:
-//байгуулагч функц. :Shape(n) гэдэг нь эх классын Shape(n) байгуулагч функцийг эхлээд дуудаж ажиллуулна гэж зааж байна.
     Shape2D(string n, double x, double y) : Shape(n) {
         this->x = x;
         this->y = y;
     }
+
+    // PURE VIRTUAL FUNCTIONS
+    virtual double talbaiFlaah() = 0;
+    virtual double perimetrFlaah() = 0;
 };
-// 3-р класс: Circle / Тойрог (Shape2D-аас удамшина)
+
+
+// CIRCLE
 class Circle : public Shape2D {
 private:
-    double radius;  // Радиус
+    double radius;
+
 public:
-    // Байгуулагч: төвийн координат, радиус, нэр
-    Circle(double cx, double cy, double r, string n) : Shape2D(n, cx, cy) {
+    Circle(double cx, double cy, double r, string n)
+        : Shape2D(n, cx, cy) {
         this->radius = r;
     }
-    // Талбай = PI * r * r
+
     double talbaiFlaah() {
         return 3.14159 * this->radius * this->radius;
     }
-    // Тойргийн урт = 2 * PI * r
+
     double perimetrFlaah() {
         return 2 * 3.14159 * this->radius;
     }
+
     void haruulah() {
-        cout << "------------------------------" << endl;
-        cout << "durs     : " << this->name           << endl;
-        cout << "tov     : (" << x << ", " << y << ")" << endl;
-        cout << "radius   : " << radius          << endl;
-        cout << "talbai   : " << talbaiFlaah()   << endl;
-        cout << "toirgiin urt: " << perimetrFlaah() << endl;
-        cout << "------------------------------" << endl;
+        cout << "Name: " << this->name << endl;
+        cout << "Area: " << this->talbaiFlaah() << endl;
+        cout << "Perimeter: " << this->perimetrFlaah() << endl;
+        cout << "----------------------" << endl;
     }
 };
 
 
-
-
-// 4-р класс: Square / Квадрат (Shape2D-аас удамшина)
+// SQUARE
 class Square : public Shape2D {
 private:
-    double side;  // Талын урт
-    // Дөрвөн оройн координат
-    double x1, y1;  // Зүүн дээд
-    double x2, y2;  // Баруун дээд
-    double x3, y3;  // Баруун доод
-    double x4, y4;  // Зүүн доод
+    double side;
+
 public:
-    // Байгуулагч: зүүн дээд оройн координат, талын урт, нэр
-    Square(double topX, double topY, double s, string n) : Shape2D(n, topX, topY) {
+    Square(double x, double y, double s, string n)
+        : Shape2D(n, x, y) {
         this->side = s;
-        // Зүүн дээд оройноос бусад оройг тооцно
-        x1 = topX;        y1 = topY;         // Зүүн дээд
-        x2 = topX + side; y2 = topY;         // Баруун дээд
-        x3 = topX + side; y3 = topY - side;  // Баруун доод
-        x4 = topX;        y4 = topY - side;  // Зүүн доод
     }
-    // Талбай = side * side
+
     double talbaiFlaah() {
         return this->side * this->side;
     }
-    // Периметр = 4 * side
+
     double perimetrFlaah() {
         return 4 * this->side;
     }
+
     void haruulah() {
-        cout << "------------------------------" << endl;
-        cout << "durs       : " << this->name        << endl;
-        cout << "taliin urt   : " << this->side         << endl;
-        cout << "zuun deed   : (" << x1 << ", " << y1 << ")" << endl;
-        cout << "baruun deed : (" << x2 << ", " << y2 << ")" << endl;
-        cout << "baruun dood : (" << x3 << ", " << y3 << ")" << endl;
-        cout << "zuun dood   : (" << x4 << ", " << y4 << ")" << endl;
-        cout << "talbai      : " << talbaiFlaah()   << endl;
-        cout << "perimetr    : " << perimetrFlaah() << endl;
-        cout << "-------------------------------" << endl;
+        cout << "Name: " << this->name << endl;
+        cout << "Area: " << this->talbaiFlaah() << endl;
+        cout << "Perimeter: " << this->perimetrFlaah() << endl;
+        cout << "----------------------" << endl;
     }
 };
-// 5-р класс: Triangle / Зөв гурвалжин (Shape2D-аас удамшина)
+
+
+//TRIANGLE 
 class Triangle : public Shape2D {
 private:
-    double side;  // Талын урт (зөв гурвалжин = бүх тал тэнцүү)
-    // Гурван оройн координат
-    double x1, y1;  // Дээд орой
-    double x2, y2;  // Зүүн доод орой
-    double x3, y3;  // Баруун доод орой
+    double side;
+
 public:
-    // Байгуулагч: дээд оройн координат, талын урт, нэр
-    Triangle(double topX, double topY, double s, string n) : Shape2D(n, topX, topY) {
+    Triangle(double x, double y, double s, string n)
+        : Shape2D(n, x, y) {
         this->side = s;
-        // Зөв гурвалжингийн өндөр = (√3 / 2) * side
-        double ondor = (sqrt(3.0) / 2.0) * side;
-        x1 = topX;             y1 = topY;          // Дээд орой
-        x2 = topX - side / 2;  y2 = topY - ondor;  // Зүүн доод
-        x3 = topX + side / 2;  y3 = topY - ondor;  // Баруун доод
     }
-    // Талбай = (√3 / 4) * side * side
+
     double talbaiFlaah() {
         return (sqrt(3.0) / 4.0) * this->side * this->side;
     }
-    // Периметр = 3 * side
+
     double perimetrFlaah() {
         return 3 * this->side;
     }
+
     void haruulah() {
-        cout << "------------------------------" << endl;
-        cout << "durs        : " << name         << endl;
-        cout << "taliin urt   : " << side          << endl;
-        cout << "deed oroi   : (" << x1 << ", " << y1 << ")" << endl;
-        cout << "zuun dood   : (" << x2 << ", " << y2 << ")" << endl;
-        cout << "baruun dood : (" << x3 << ", " << y3 << ")" << endl;
-        cout << "talbai      : " << talbaiFlaah()   << endl;
-        cout << "perimetr    : " << perimetrFlaah() << endl;
-        cout << "------------------------------" << endl;
+        cout << "Name: " << this->name << endl;
+        cout << "Area: " << this->talbaiFlaah() << endl;
+        cout << "Perimeter: " << this->perimetrFlaah() << endl;
+        cout << "----------------------" << endl;
     }
 };
-// main функц - объект үүсгэж туршина
+
+
+// MAIN 
 int main() {
-    // --- Тойрог үүсгэх ---
-    // Төв цэг (0, 0), радиус 5
+
     Circle myCircle(0, 0, 5, "toirog");
-    myCircle.haruulah();
-    // --- Квадрат үүсгэх ---
-    // Зүүн дээд орой (1, 4), тал 3
     Square mySquare(1, 4, 3, "kvadrat");
+    Triangle myTriangle(0, 6, 4, "triangle");
+
+    myCircle.haruulah();
     mySquare.haruulah();
-    // --- Зөв гурвалжин үүсгэх ---
-    // Дээд орой (0, 6), тал 4
-    Triangle myTriangle(0, 6, 4, "zov gurvaljin");
     myTriangle.haruulah();
 
-    cout << "Uussen object-iin too:" << Shape :: getCount() << endl;
-    // ======= 5-р даалгавар: Талбай болон периметрээр эрэмбэлэх naomi
+    cout << "Object count: " << Shape::getCount() << endl;
 
-    // Shape заагчдын массив үүсгэж, 3 объектыг хадгална
-    Shape* dursууd[3];
-    dursууd[0] = &myCircle;
-    dursууd[1] = &mySquare;
-    dursууd[2] = &myTriangle;
+    //SORTING 
+    Shape* arr[3];
+    arr[0] = &myCircle;
+    arr[1] = &mySquare;
+    arr[2] = &myTriangle;
 
     int n = 3;
 
-    // --- Талбайгаар эрэмбэлэх (bubble sort) ---
-    // talbaiFlaah() жинхэнэ хийсвэр функцийг ашигласан
+    // ---- SORT BY AREA ----
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            if (dursууd[j]->talbaiFlaah() > dursууd[j+1]->talbaiFlaah()) {
-                Shape* temp = dursууd[j];
-                dursууd[j] = dursууd[j+1];
-                dursууd[j+1] = temp;
+            if (arr[j]->talbaiFlaah() > arr[j + 1]->talbaiFlaah()) {
+                Shape* temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
-    }
-    cout << "\n=== Talbaigar erembelesen (bagaas ih ruu) ===" << endl;
-    for (int i = 0; i < n; i++) {
-        cout << dursууd[i]->getName()
-             << " | talbai: " << dursууd[i]->talbaiFlaah() << endl;
     }
 
-    // --- Периметрээр эрэмбэлэх (bubble sort) ---
-    // perimetrFlaah() жинхэнэ хийсвэр функцийг ашигласан
+    cout << "\nSorted by area:\n";
+    for (int i = 0; i < n; i++) {
+        cout << arr[i]->getName()
+             << " = " << arr[i]->talbaiFlaah() << endl;
+    }
+
+    // ---- SORT BY PERIMETER ----
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
-            if (dursууd[j]->perimetrFlaah() > dursууd[j+1]->perimetrFlaah()) {
-                Shape* temp = dursууd[j];
-                dursууd[j] = dursууd[j+1];
-                dursууd[j+1] = temp;
+            if (arr[j]->perimetrFlaah() > arr[j + 1]->perimetrFlaah()) {
+                Shape* temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
     }
-    cout << "\n=== Perimetreер erembelesen (bagaas ih ruu) ===" << endl;
+
+    cout << "\nSorted by perimeter:\n";
     for (int i = 0; i < n; i++) {
-        cout << dursууd[i]->getName()
-             << " | perimetr: " << dursууd[i]->perimetrFlaah() << endl;
+        cout << arr[i]->getName()
+             << " = " << arr[i]->perimetrFlaah() << endl;
     }
+
     return 0;
 }
