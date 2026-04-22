@@ -11,7 +11,6 @@ public:
     // Байгуулагч - нэр оноох
     Shape(string n) {
         name = n;
-        count++;
     }
     string getName() {
         return name;
@@ -20,7 +19,7 @@ public:
     virtual double talbaiFlaah() = 0;
     virtual double perimetrFlaah() = 0;
 };
-int Shape :: count = 0;
+
 // 2-р класс: Shape2D (Shape-аас удамшина)
 class Shape2D : public Shape {
 protected:
