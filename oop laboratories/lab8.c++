@@ -52,15 +52,15 @@ public:
     }
     // Талбай = PI * r * r
     double talbaiFlaah() {
-        return 3.14159 * radius * radius;
+        return 3.14159 * this->radius * this->radius;
     }
     // Тойргийн урт = 2 * PI * r
     double perimetrFlaah() {
-        return 2 * 3.14159 * radius;
+        return 2 * 3.14159 * this->radius;
     }
     void haruulah() {
         cout << "------------------------------" << endl;
-        cout << "durs     : " << name           << endl;
+        cout << "durs     : " << this->name           << endl;
         cout << "tov     : (" << x << ", " << y << ")" << endl;
         cout << "radius   : " << radius          << endl;
         cout << "talbai   : " << talbaiFlaah()   << endl;
@@ -84,7 +84,7 @@ private:
 public:
     // Байгуулагч: зүүн дээд оройн координат, талын урт, нэр
     Square(double topX, double topY, double s, string n) : Shape2D(n, topX, topY) {
-        side = s;
+        this->side = s;
         // Зүүн дээд оройноос бусад оройг тооцно
         x1 = topX;        y1 = topY;         // Зүүн дээд
         x2 = topX + side; y2 = topY;         // Баруун дээд
@@ -93,16 +93,16 @@ public:
     }
     // Талбай = side * side
     double talbaiFlaah() {
-        return side * side;
+        return this->side * this->side;
     }
     // Периметр = 4 * side
     double perimetrFlaah() {
-        return 4 * side;
+        return 4 * this->side;
     }
     void haruulah() {
         cout << "------------------------------" << endl;
-        cout << "durs       : " << name        << endl;
-        cout << "taliin urt   : " << side         << endl;
+        cout << "durs       : " << this->name        << endl;
+        cout << "taliin urt   : " << this->side         << endl;
         cout << "zuun deed   : (" << x1 << ", " << y1 << ")" << endl;
         cout << "baruun deed : (" << x2 << ", " << y2 << ")" << endl;
         cout << "baruun dood : (" << x3 << ", " << y3 << ")" << endl;
@@ -123,7 +123,7 @@ private:
 public:
     // Байгуулагч: дээд оройн координат, талын урт, нэр
     Triangle(double topX, double topY, double s, string n) : Shape2D(n, topX, topY) {
-        side = s;
+        this->side = s;
         // Зөв гурвалжингийн өндөр = (√3 / 2) * side
         double ondor = (sqrt(3.0) / 2.0) * side;
         x1 = topX;             y1 = topY;          // Дээд орой
@@ -132,11 +132,11 @@ public:
     }
     // Талбай = (√3 / 4) * side * side
     double talbaiFlaah() {
-        return (sqrt(3.0) / 4.0) * side * side;
+        return (sqrt(3.0) / 4.0) * this->side * this->side;
     }
     // Периметр = 3 * side
     double perimetrFlaah() {
-        return 3 * side;
+        return 3 * this->side;
     }
     void haruulah() {
         cout << "------------------------------" << endl;
