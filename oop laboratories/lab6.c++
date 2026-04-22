@@ -56,3 +56,43 @@ public:
         cout << "------------------------------" << endl;
     }
 };
+// 4-р класс: Square / Квадрат (Shape2D-аас удамшина)
+class Square : public Shape2D {
+private:
+    double side;  // Талын урт
+    // Дөрвөн оройн координат
+    double x1, y1;  // Зүүн дээд
+    double x2, y2;  // Баруун дээд
+    double x3, y3;  // Баруун доод
+    double x4, y4;  // Зүүн доод
+public:
+    // Байгуулагч: зүүн дээд оройн координат, талын урт, нэр
+    Square(double topX, double topY, double s, string n) : Shape2D(n, topX, topY) {
+        side = s;
+        // Зүүн дээд оройноос бусад оройг тооцно
+        x1 = topX;        y1 = topY;         // Зүүн дээд
+        x2 = topX + side; y2 = topY;         // Баруун дээд
+        x3 = topX + side; y3 = topY - side;  // Баруун доод
+        x4 = topX;        y4 = topY - side;  // Зүүн доод
+    }
+    // Талбай = side * side
+    double talbaiFlaah() {
+        return side * side;
+    }
+    // Периметр = 4 * side
+    double perimetrFlaah() {
+        return 4 * side;
+    }
+    void haruulah() {
+        cout << "------------------------------" << endl;
+        cout << "durs       : " << name        << endl;
+        cout << "taliin urt   : " << side         << endl;
+        cout << "zuun deed   : (" << x1 << ", " << y1 << ")" << endl;
+        cout << "baruun deed : (" << x2 << ", " << y2 << ")" << endl;
+        cout << "baruun dood : (" << x3 << ", " << y3 << ")" << endl;
+        cout << "zuun dood   : (" << x4 << ", " << y4 << ")" << endl;
+        cout << "talbai      : " << talbaiFlaah()   << endl;
+        cout << "perimetr    : " << perimetrFlaah() << endl;
+        cout << "-------------------------------" << endl;
+    }
+};
